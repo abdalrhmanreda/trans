@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="دليل سائقي المواصلات في القرية - ميكروباص، توك توك، تروسيكل">
+    <title>دليل المواصلات - قريتنا</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-bus"></i>
+            </div>
+            <div class="header-text">
+                <h1>دليل المواصلات</h1>
+                <p>خدمة النقل في قريتنا</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="ابحث عن سائق، منطقة، أو نوع المركبة..."
+                    autocomplete="off"
+                >
+                <button id="clearSearch" class="clear-btn" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="filters-container">
+            <button class="filter-btn active" data-category="all">
+                <i class="fas fa-border-all"></i>
+                <span>الكل</span>
+                <span class="badge" id="badge-all">0</span>
+            </button>
+            <button class="filter-btn" data-category="microbus">
+                <i class="fas fa-bus"></i>
+                <span>ميكروباص</span>
+                <span class="badge" id="badge-microbus">0</span>
+            </button>
+            <button class="filter-btn" data-category="tuk-tuk">
+                <i class="fas fa-motorcycle"></i>
+                <span>توك توك</span>
+                <span class="badge" id="badge-tuk-tuk">0</span>
+            </button>
+            <button class="filter-btn" data-category="tricycle">
+                <i class="fas fa-bicycle"></i>
+                <span>تروسيكل</span>
+                <span class="badge" id="badge-tricycle">0</span>
+            </button>
+        </div>
+
+        <!-- Results Info -->
+        <div class="results-info">
+            <p id="resultsCount">جاري التحميل...</p>
+        </div>
+
+        <!-- Drivers Grid -->
+        <div class="drivers-grid" id="driversGrid">
+            <!-- Driver cards will be inserted here by JavaScript -->
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3>لا توجد نتائج</h3>
+            <p>حاول البحث بكلمات مختلفة أو اختر فئة أخرى</p>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>جاري تحميل البيانات...</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 دليل المواصلات - قريتنا</p>
+            <p class="footer-note">
+                <i class="fas fa-info-circle"></i>
+                لإضافة أو تعديل البيانات، يرجى التواصل مع الإدارة
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
