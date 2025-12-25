@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="دليل سائقي المواصلات في القرية - ميكروباص، توك توك، تروسيكل">
-    <title>دليل المواصلات - قريتنا</title>
-    
+    <meta name="description" content="دليل الخدمات في القرية - مواصلات، حرفيون، مدرسين، مأذون، وأكثر">
+    <title>دليل الخدمات - قريتنا</title>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
         <div class="header-content">
             <div class="header-icon">
-                <i class="fas fa-bus"></i>
+                <i class="fas fa-address-book"></i>
             </div>
             <div class="header-text">
-                <h1>دليل المواصلات</h1>
-                <p>خدمة النقل في قريتنا</p>
+                <h1>دليل الخدمات</h1>
+                <p>جميع الخدمات في قريتنا</p>
             </div>
         </div>
     </header>
@@ -36,39 +38,109 @@
         <div class="search-container">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    placeholder="ابحث عن سائق، منطقة، أو نوع المركبة..."
-                    autocomplete="off"
-                >
+                <input type="text" id="searchInput" placeholder="ابحث عن خدمة، اسم، منطقة..." autocomplete="off">
                 <button id="clearSearch" class="clear-btn" style="display: none;">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Category Filters -->
-        <div class="filters-container">
-            <button class="filter-btn active" data-category="all">
+        <!-- Service Type Filters (All visible) -->
+        <div class="service-filters-all">
+            <button class="service-filter-btn active" data-service-type="all">
                 <i class="fas fa-border-all"></i>
                 <span>الكل</span>
-                <span class="badge" id="badge-all">0</span>
+                <span class="filter-count">0</span>
             </button>
-            <button class="filter-btn" data-category="microbus">
+
+            <!-- Transportation -->
+            <button class="service-filter-btn" data-service-type="microbus">
                 <i class="fas fa-bus"></i>
                 <span>ميكروباص</span>
-                <span class="badge" id="badge-microbus">0</span>
+                <span class="filter-count">0</span>
             </button>
-            <button class="filter-btn" data-category="tuk-tuk">
+            <button class="service-filter-btn" data-service-type="tuk-tuk">
                 <i class="fas fa-motorcycle"></i>
                 <span>توك توك</span>
-                <span class="badge" id="badge-tuk-tuk">0</span>
+                <span class="filter-count">0</span>
             </button>
-            <button class="filter-btn" data-category="tricycle">
+            <button class="service-filter-btn" data-service-type="tricycle">
                 <i class="fas fa-bicycle"></i>
                 <span>تروسيكل</span>
-                <span class="badge" id="badge-tricycle">0</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="transport-vehicle">
+                <i class="fas fa-truck"></i>
+                <span>سيارة نقل</span>
+                <span class="filter-count">0</span>
+            </button>
+
+            <!-- Craftsmen -->
+            <button class="service-filter-btn" data-service-type="electrician">
+                <i class="fas fa-bolt"></i>
+                <span>كهربائي</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="plumber">
+                <i class="fas fa-wrench"></i>
+                <span>سباك</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="painter">
+                <i class="fas fa-paint-roller"></i>
+                <span>دهان</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="tiler">
+                <i class="fas fa-th"></i>
+                <span>سباح / بلاط</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="plasterer">
+                <i class="fas fa-trowel"></i>
+                <span>محارة</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="carpenter">
+                <i class="fas fa-hammer"></i>
+                <span>نجار</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="blacksmith">
+                <i class="fas fa-tools"></i>
+                <span>حداد</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="tv-technician">
+                <i class="fas fa-tv"></i>
+                <span>صيانة تلفزيونات</span>
+                <span class="filter-count">0</span>
+            </button>
+
+            <!-- Suppliers -->
+            <button class="service-filter-btn" data-service-type="gas-distributor">
+                <i class="fas fa-burn"></i>
+                <span>توصيل غاز</span>
+                <span class="filter-count">0</span>
+            </button>
+
+            <!-- Educational -->
+            <button class="service-filter-btn" data-service-type="teacher">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>مدرس</span>
+                <span class="filter-count">0</span>
+            </button>
+            <button class="service-filter-btn" data-service-type="quran-teacher">
+                <i class="fas fa-book-quran"></i>
+                <span>محفظ قرآن</span>
+                <span class="filter-count">0</span>
+            </button>
+
+            <!-- Religious -->
+            <button class="service-filter-btn" data-service-type="marriage-officiant">
+                <i class="fas fa-rings-wedding"></i>
+                <span>مأذون شرعي</span>
+                <span class="filter-count">0</span>
             </button>
         </div>
 
@@ -77,9 +149,9 @@
             <p id="resultsCount">جاري التحميل...</p>
         </div>
 
-        <!-- Drivers Grid -->
-        <div class="drivers-grid" id="driversGrid">
-            <!-- Driver cards will be inserted here by JavaScript -->
+        <!-- Services Grid -->
+        <div class="services-grid" id="servicesGrid">
+            <!-- Service provider cards will be inserted here by JavaScript -->
         </div>
 
         <!-- No Results Message -->
@@ -99,7 +171,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <p>© 2024 دليل المواصلات - قريتنا</p>
+            <p>© 2025 دليل الخدمات -قريتنا</p>
             <p class="footer-note">
                 <i class="fas fa-info-circle"></i>
                 لإضافة أو تعديل البيانات، يرجى التواصل مع الإدارة
@@ -111,4 +183,5 @@
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

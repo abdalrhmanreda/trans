@@ -1,18 +1,18 @@
 /**
- * Transportation Directory - Main JavaScript
- * Handles all interactions, filtering, and search functionality
+ * Village Services Directory - Main JavaScript
+ * Simple single-level filtering by service type
  */
 
 // State Management
-let currentCategory = 'all';
+let currentServiceType = 'all';
 let searchQuery = '';
-let filteredDrivers = [];
+let filteredServices = [];
 
 // DOM Elements
-const driversGrid = document.getElementById('driversGrid');
+const servicesGrid = document.getElementById('servicesGrid');
 const searchInput = document.getElementById('searchInput');
 const clearSearchBtn = document.getElementById('clearSearch');
-const filterButtons = document.querySelectorAll('.filter-btn');
+const filterButtons = document.querySelectorAll('.service-filter-btn');
 const resultsCount = document.getElementById('resultsCount');
 const noResults = document.getElementById('noResults');
 const loading = document.getElementById('loading');
@@ -24,8 +24,8 @@ function init() {
     // Simulate loading
     setTimeout(() => {
         loading.style.display = 'none';
-        renderDrivers();
-        updateBadges();
+        updateFilterCounts();
+        renderServices();
         attachEventListeners();
     }, 500);
 }
@@ -55,7 +55,7 @@ function handleSearch(e) {
     // Show/hide clear button
     clearSearchBtn.style.display = searchQuery ? 'flex' : 'none';
 
-    renderDrivers();
+    renderServices();
 }
 
 /**
@@ -65,107 +65,109 @@ function clearSearch() {
     searchInput.value = '';
     searchQuery = '';
     clearSearchBtn.style.display = 'none';
-    renderDrivers();
+    renderServices();
 }
 
 /**
  * Handle filter button click
  */
 function handleFilterClick(button) {
-    const category = button.dataset.category;
+    const serviceType = button.dataset.serviceType;
 
     // Update active state
     filterButtons.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
 
-    // Update current category
-    currentCategory = category;
+    // Update current service type
+    currentServiceType = serviceType;
 
-    // Re-render drivers
-    renderDrivers();
+    // Re-render services
+    renderServices();
 }
 
 /**
- * Filter drivers based on category and search query
+ * Filter services based on service type and search query
  */
-function filterDrivers() {
-    filteredDrivers = driversData.filter(driver => {
-        // Category filter
-        const categoryMatch = currentCategory === 'all' || driver.vehicleType === currentCategory;
+function filterServices() {
+    filteredServices = servicesData.filter(service => {
+        // Service type filter
+        const typeMatch = currentServiceType === 'all' || service.serviceType === currentServiceType;
 
         // Search filter
+        const serviceInfo = serviceTypeConfig[service.serviceType];
         const searchMatch = !searchQuery ||
-            driver.name.toLowerCase().includes(searchQuery) ||
-            driver.workingArea.toLowerCase().includes(searchQuery) ||
-            driver.notes.toLowerCase().includes(searchQuery) ||
-            vehicleTypeConfig[driver.vehicleType].name.toLowerCase().includes(searchQuery);
+            service.name.toLowerCase().includes(searchQuery) ||
+            service.workingArea.toLowerCase().includes(searchQuery) ||
+            service.notes.toLowerCase().includes(searchQuery) ||
+            (serviceInfo && serviceInfo.name.toLowerCase().includes(searchQuery)) ||
+            (serviceInfo && serviceInfo.categoryName.toLowerCase().includes(searchQuery));
 
-        return categoryMatch && searchMatch;
+        return typeMatch && searchMatch;
     });
 
-    return filteredDrivers;
+    return filteredServices;
 }
 
 /**
- * Render drivers to the grid
+ * Render services to the grid
  */
-function renderDrivers() {
-    filterDrivers();
+function renderServices() {
+    filterServices();
 
     // Update results count
     updateResultsCount();
 
     // Clear grid
-    driversGrid.innerHTML = '';
+    servicesGrid.innerHTML = '';
 
     // Check if there are results
-    if (filteredDrivers.length === 0) {
+    if (filteredServices.length === 0) {
         noResults.style.display = 'block';
-        driversGrid.style.display = 'none';
+        servicesGrid.style.display = 'none';
         return;
     }
 
     noResults.style.display = 'none';
-    driversGrid.style.display = 'grid';
+    servicesGrid.style.display = 'grid';
 
-    // Render each driver card
-    filteredDrivers.forEach((driver, index) => {
-        const card = createDriverCard(driver, index);
-        driversGrid.appendChild(card);
+    // Render each service card
+    filteredServices.forEach((service, index) => {
+        const card = createServiceCard(service, index);
+        servicesGrid.appendChild(card);
     });
 }
 
 /**
- * Create a driver card element
+ * Create a service provider card element
  */
-function createDriverCard(driver, index) {
+function createServiceCard(service, index) {
     const card = document.createElement('div');
-    card.className = 'driver-card';
+    card.className = 'service-card';
     card.style.animationDelay = `${index * 0.05}s`;
 
-    const vehicleInfo = vehicleTypeConfig[driver.vehicleType];
-    const initials = getInitials(driver.name);
-    const whatsappNumber = formatPhoneForWhatsApp(driver.phone);
-    const whatsappMessage = `مرحباً ${driver.name}، أريد الاستفسار عن خدمة النقل`;
+    const serviceInfo = serviceTypeConfig[service.serviceType];
+    const initials = getInitials(service.name);
+    const whatsappNumber = formatPhoneForWhatsApp(service.phone);
+    const whatsappMessage = `مرحباً ${service.name}، أريد الاستفسار عن خدمتك (${serviceInfo.name})`;
 
     card.innerHTML = `
-        <div class="driver-header">
-            <div class="driver-avatar">${initials}</div>
-            <div class="driver-info">
-                <h3>${driver.name}</h3>
-                <span class="driver-vehicle">
-                    <i class="${vehicleInfo.icon}"></i>
-                    ${vehicleInfo.name}
+        <div class="service-header">
+            <div class="service-avatar">${initials}</div>
+            <div class="service-info">
+                <h3>${service.name}</h3>
+                <span class="service-type">
+                    <i class="${serviceInfo.icon}"></i>
+                    ${serviceInfo.name}
                 </span>
             </div>
         </div>
         
-        <div class="driver-details">
+        <div class="service-details">
             <div class="detail-item">
                 <i class="fas fa-phone-alt"></i>
                 <div class="detail-content">
                     <div class="detail-label">رقم الهاتف</div>
-                    <div class="detail-value">${formatPhoneNumber(driver.phone)}</div>
+                    <div class="detail-value">${formatPhoneNumber(service.phone)}</div>
                 </div>
             </div>
             
@@ -173,28 +175,29 @@ function createDriverCard(driver, index) {
                 <i class="fas fa-map-marker-alt"></i>
                 <div class="detail-content">
                     <div class="detail-label">منطقة العمل</div>
-                    <div class="detail-value">${driver.workingArea}</div>
+                    <div class="detail-value">${service.workingArea}</div>
                 </div>
             </div>
             
-            ${driver.notes ? `
+            ${service.notes ? `
                 <div class="detail-item">
                     <i class="fas fa-info-circle"></i>
                     <div class="detail-content">
                         <div class="detail-label">ملاحظات</div>
-                        <div class="detail-value">${driver.notes}</div>
+                        <div class="detail-value">${service.notes}</div>
                     </div>
                 </div>
             ` : ''}
         </div>
         
-        <div class="driver-actions">
-            <a href="tel:${driver.phone}" class="action-btn call-btn">
+        <div class="service-actions">
+            <a href="tel:${service.phone}" class="action-btn call-btn">
                 <i class="fas fa-phone"></i>
                 <span>اتصال</span>
             </a>
             <a href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}" 
                target="_blank" 
+               rel="noopener noreferrer"
                class="action-btn whatsapp-btn">
                 <i class="fab fa-whatsapp"></i>
                 <span>واتساب</span>
@@ -206,14 +209,10 @@ function createDriverCard(driver, index) {
 }
 
 /**
- * Get initials from name
+ * Get first letter from name
  */
 function getInitials(name) {
-    const words = name.trim().split(' ');
-    if (words.length >= 2) {
-        return words[0][0] + words[1][0];
-    }
-    return words[0][0];
+    return name.trim()[0];
 }
 
 /**
@@ -246,40 +245,39 @@ function formatPhoneForWhatsApp(phone) {
  * Update results count text
  */
 function updateResultsCount() {
-    const count = filteredDrivers.length;
-    const categoryName = currentCategory === 'all' ? 'جميع الفئات' : vehicleTypeConfig[currentCategory].name;
+    const count = filteredServices.length;
+    let filterName = 'جميع الخدمات';
+
+    if (currentServiceType !== 'all' && serviceTypeConfig[currentServiceType]) {
+        filterName = serviceTypeConfig[currentServiceType].name;
+    }
 
     if (searchQuery) {
-        resultsCount.textContent = `تم العثور على ${count} سائق في "${categoryName}" يطابق البحث "${searchQuery}"`;
+        resultsCount.textContent = `تم العثور على ${count} مقدم خدمة في "${filterName}" يطابق البحث "${searchQuery}"`;
     } else {
-        resultsCount.textContent = `عرض ${count} سائق في "${categoryName}"`;
+        resultsCount.textContent = `عرض ${count} مقدم خدمة في "${filterName}"`;
     }
 }
 
 /**
- * Update category badges with counts
+ * Update filter counts
  */
-function updateBadges() {
-    // Count all drivers
-    const allCount = driversData.length;
-    document.getElementById('badge-all').textContent = allCount;
+function updateFilterCounts() {
+    filterButtons.forEach(btn => {
+        const serviceType = btn.dataset.serviceType;
+        const countElement = btn.querySelector('.filter-count');
 
-    // Count by category
-    const categoryCounts = {
-        microbus: 0,
-        'tuk-tuk': 0,
-        tricycle: 0
-    };
+        if (!countElement) return;
 
-    driversData.forEach(driver => {
-        if (categoryCounts.hasOwnProperty(driver.vehicleType)) {
-            categoryCounts[driver.vehicleType]++;
+        let count;
+        if (serviceType === 'all') {
+            count = servicesData.length;
+        } else {
+            count = servicesData.filter(s => s.serviceType === serviceType).length;
         }
-    });
 
-    document.getElementById('badge-microbus').textContent = categoryCounts.microbus;
-    document.getElementById('badge-tuk-tuk').textContent = categoryCounts['tuk-tuk'];
-    document.getElementById('badge-tricycle').textContent = categoryCounts.tricycle;
+        countElement.textContent = count;
+    });
 }
 
 /**

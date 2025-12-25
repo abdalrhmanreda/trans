@@ -1,17 +1,45 @@
-# 🚌 دليل المواصلات - Village Transportation Directory
+# 📖 دليل الخدمات - Village Services Directory
 
-A beautiful, modern, and mobile-friendly web application for listing village transportation drivers including microbus, tuk-tuk, and tricycle drivers.
+A beautiful, modern, and mobile-friendly web application for listing all village services including transportation, craftsmen, teachers, and more.
 
 ## ✨ Features
 
 - **📱 Mobile-First Design**: Fully responsive and optimized for mobile devices
 - **🎨 Modern UI**: Beautiful gradients, glassmorphism effects, and smooth animations
-- **🔍 Smart Search**: Real-time search across driver names, areas, and notes
-- **🏷️ Category Filters**: Easy filtering by vehicle type (Microbus, TukTuk, Tricycle)
-- **📞 Quick Actions**: Direct call and WhatsApp buttons for each driver
+- **🔍 Smart Search**: Real-time search across provider names, areas, service types, and notes
+- **🏷️ Category Dropdown**: Easy filtering through organized service categories
+- **📞 Quick Actions**: Direct call and WhatsApp buttons for each service provider
 - **⚡ Fast Performance**: Pure vanilla JavaScript, no dependencies
 - **♿ Accessibility**: Semantic HTML and keyboard shortcuts support
 - **🌐 RTL Support**: Full Arabic language support with right-to-left layout
+
+## 🗂️ Service Categories
+
+### 🚌 Transportation (المواصلات)
+- Microbus (ميكروباص)
+- Tuk-Tuk (توك توك)
+- Tricycle (تروسيكل)
+- Transport Vehicles (سيارة نقل)
+
+### 🔧 Craftsmen & Technicians (الحرفيون والفنيون)
+- Electricians (كهربائي)
+- Plumbers (سباك)
+- Painters (دهان)
+- Tilers (سباح / بلاط)
+- Plasterers (محارة)
+- Carpenters (نجار)
+- Blacksmiths (حداد)
+- TV Technicians (صيانة تلفزيونات)
+
+### 📦 Suppliers (الموردون)
+- Gas Distributors (توصيل غاز)
+
+### 🎓 Educational Services (التعليم)
+- Teachers (مدرس)
+- Quran Teachers (محفظ قرآن)
+
+### 🕌 Religious Services (الخدمات الدينية)
+- Marriage Officiants (مأذون شرعي)
 
 ## 🚀 Quick Start
 
@@ -49,42 +77,69 @@ trans/
 ├── index.html          # Main HTML file
 ├── styles.css          # All styles and responsive design
 ├── script.js           # Application logic and interactions
-├── data.js             # Driver database (easy to edit)
+├── data.js             # Services database (easy to edit)
 └── README.md           # This file
 ```
 
-## 📝 How to Add/Edit Drivers
+## 📝 How to Add/Edit Service Providers
 
-### Adding a New Driver
+### Adding a New Service Provider
 
 1. Open `data.js` in any text editor
-2. Add a new object to the `driversData` array:
+2. Add a new object to the `servicesData` array:
 
 ```javascript
 {
-    id: 16,  // Unique ID (increment from last)
-    name: "اسم السائق",
+    id: 36,  // Unique ID (increment from last)
+    name: "اسم مقدم الخدمة",
     phone: "01234567890",
-    vehicleType: "microbus",  // or "tuk-tuk" or "tricycle"
+    serviceType: "electrician",  // Choose from available types
     workingArea: "منطقة العمل",
     notes: "ملاحظات إضافية (اختياري)"
 }
 ```
 
-3. Save the file and refresh the page
+### Available Service Types
 
-### Editing Existing Driver
+Use these exact values for `serviceType`:
+- **Transportation**: `microbus`, `tuk-tuk`, `tricycle`, `transport-vehicle`
+- **Craftsmen**: `electrician`, `plumber`, `painter`, `tiler`, `plasterer`, `carpenter`, `blacksmith`, `tv-technician`
+- **Suppliers**: `gas-distributor`
+- **Educational**: `teacher`, `quran-teacher`
+- **Religious**: `marriage-officiant`
+
+### Editing Existing Service Provider
 
 1. Open `data.js`
-2. Find the driver by searching for their name
+2. Find the provider by searching for their name
 3. Modify any field (name, phone, workingArea, notes)
 4. Save and refresh
 
-### Removing a Driver
+### Removing a Service Provider
 
 1. Open `data.js`
-2. Find and delete the entire driver object
+2. Find and delete the entire provider object
 3. Save and refresh
+
+## 🎨 Adding a New Service Type
+
+If you need to add a completely new service type:
+
+1. Open `data.js`
+2. Add your new type to `serviceTypeConfig`:
+
+```javascript
+"new-service": {
+    name: "اسم الخدمة",
+    icon: "fas fa-icon-name",  // Font Awesome icon
+    category: "craftsmen",  // or create new category
+    categoryName: "الحرفيون والفنيون"
+}
+```
+
+3. If creating a new category, also update `categoryConfig`
+4. Update `index.html` to add the option to the dropdown
+5. Save and refresh
 
 ## 🎨 Customization
 
@@ -101,19 +156,12 @@ Edit the CSS variables in `styles.css`:
 }
 ```
 
-### Vehicle Types
+### Changing Fonts
 
-To add a new vehicle type, edit `vehicleTypeConfig` in `data.js`:
+The app uses Google Fonts (Cairo). To change:
 
-```javascript
-const vehicleTypeConfig = {
-    "new-type": {
-        name: "اسم المركبة",
-        icon: "fas fa-car",  // Font Awesome icon
-        color: "#ff6b6b"
-    }
-};
-```
+1. Update the Google Fonts link in `index.html`
+2. Update the font-family in `styles.css`
 
 ## ⌨️ Keyboard Shortcuts
 
@@ -122,7 +170,7 @@ const vehicleTypeConfig = {
 
 ## 📱 Mobile Features
 
-- Touch-optimized buttons
+- Touch-optimized buttons and dropdowns
 - Swipe-friendly cards
 - Optimized for small screens
 - Direct calling with one tap
@@ -136,48 +184,59 @@ const vehicleTypeConfig = {
    - Create a GitHub repository
    - Push your files
    - Enable GitHub Pages in settings
+   - Your site will be at: `https://yourusername.github.io/repo-name/`
    
 2. **Netlify**
-   - Drag and drop your folder
-   - Get instant hosting
+   - Drag and drop your folder on [netlify.com](https://netlify.com)
+   - Get instant hosting with custom domain option
    
 3. **Vercel**
-   - Import from GitHub
+   - Import from GitHub or upload files
    - Auto-deploy on updates
+   - Free SSL certificate
 
 4. **Firebase Hosting**
    - Use Firebase CLI
    - Deploy with `firebase deploy`
 
-## 🔄 Future Enhancements
+## 🔄 Future Enhancement Ideas
 
 Possible features to add:
 
-- [ ] Admin panel for managing drivers
-- [ ] Driver ratings and reviews
+- [ ] Admin panel for managing service providers
+- [ ] Provider ratings and reviews
 - [ ] Real-time availability status
-- [ ] Route planning
-- [ ] Price calculator
-- [ ] Driver photos
-- [ ] Multi-language support
+- [ ] Service provider photos
+- [ ] Map integration
+- [ ] Price list/calculator
+- [ ] Multi-language support (English, French, etc.)
 - [ ] Dark mode toggle
-- [ ] Export to PDF
-- [ ] Share driver contact
+- [ ] Export/Print directory
+- [ ] Share provider contact
+- [ ] Online booking system
+- [ ] Provider profile pages
+- [ ] Comments and testimonials
 
 ## 🛠️ Technical Details
 
 **Technologies:**
 - HTML5
-- CSS3 (CSS Grid, Flexbox, Custom Properties)
+- CSS3 (CSS Grid, Flexbox, Custom Properties, Animations)
 - Vanilla JavaScript (ES6+)
-- Font Awesome 6.4.0
-- Google Fonts (Cairo)
+- Font Awesome 6.4.0 (Icons)
+- Google Fonts (Cairo typeface)
 
 **Browser Support:**
 - Chrome/Edge (latest)
 - Firefox (latest)
 - Safari (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
+- Mobile browsers (iOS Safari, Chrome Mobile, Samsung Internet)
+
+**Performance:**
+- No external dependencies
+- Lightweight (~50KB total)
+- Fast loading
+- Smooth animations at 60fps
 
 ## 📄 License
 
@@ -187,10 +246,36 @@ This project is open source and available for free use.
 
 Feel free to fork, modify, and use this project for your village or community!
 
+### How to Contribute
+
+1. Fork the repository
+2. Make your changes
+3. Test thoroughly
+4. Submit a pull request with description
+
+## 💡 Tips
+
+- **Regular Updates**: Keep service provider information up-to-date
+- **Backup**: Keep a backup of `data.js` before major changes
+- **Testing**: Test on multiple devices and browsers
+- **Accessibility**: Ensure all providers have complete information
+- **Privacy**: Get consent before listing personal numbers
+
 ## 📞 Support
 
-For questions or issues, contact the village administration.
+For questions, issues, or suggestions:
+- Contact the village administration
+- Open an issue on GitHub (if using version control)
+- Reach out to the technical maintainer
+
+## 🙏 Acknowledgments
+
+- Icons by [Font Awesome](https://fontawesome.com)
+- Fonts by [Google Fonts](https://fonts.google.com)
+- Made with ❤️ for our village community
 
 ---
 
-Made with ❤️ for our village community
+**Version**: 2.0 - Multi-Service Directory  
+**Last Updated**: December 2024  
+**Maintained by**: Village Technical Team

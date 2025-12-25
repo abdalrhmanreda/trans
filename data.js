@@ -1,26 +1,27 @@
 /**
- * Transportation Drivers Database
+ * Village Services Database
  * 
- * To add a new driver, simply add an object to the driversData array below.
+ * To add a new service provider, simply add an object to the servicesData array below.
  * 
- * Driver object structure:
+ * Service provider object structure:
  * {
  *   id: unique number,
- *   name: "Driver Name",
+ *   name: "Provider Name",
  *   phone: "Phone number (will be used for calling)",
- *   vehicleType: "microbus" | "tuk-tuk" | "tricycle",
+ *   serviceType: "service-category-key",
  *   workingArea: "Area description",
- *   notes: "Optional notes" (can be empty string)
+ *   notes: "Optional notes or specialization" (can be empty string)
  * }
  */
 
-const driversData = [
+const servicesData = [
+    // ========== TRANSPORTATION SERVICES ==========
     // Microbus Drivers
     {
         id: 1,
         name: "أحمد محمد علي",
         phone: "01098584630",
-        vehicleType: "microbus",
+        serviceType: "microbus",
         workingArea: "القرية - المدينة",
         notes: "متاح طوال اليوم، رحلات منتظمة كل ساعة"
     },
@@ -28,7 +29,7 @@ const driversData = [
         id: 2,
         name: "محمود حسن",
         phone: "01098765432",
-        vehicleType: "microbus",
+        serviceType: "microbus",
         workingArea: "القرية - المحافظة",
         notes: "رحلات صباحية ومسائية فقط"
     },
@@ -36,130 +37,441 @@ const driversData = [
         id: 3,
         name: "خالد السيد",
         phone: "01123456789",
-        vehicleType: "microbus",
+        serviceType: "microbus",
         workingArea: "القرية - القاهرة",
         notes: "رحلة واحدة صباحاً ورحلة مسائية"
-    },
-    {
-        id: 4,
-        name: "عبد الله إبراهيم",
-        phone: "01234567890",
-        vehicleType: "microbus",
-        workingArea: "القرية - الإسكندرية",
-        notes: "رحلات يومي الجمعة والسبت"
     },
 
     // Tuk-Tuk Drivers
     {
-        id: 5,
+        id: 4,
         name: "سعيد أحمد",
         phone: "01156789012",
-        vehicleType: "tuk-tuk",
+        serviceType: "tuk-tuk",
         workingArea: "داخل القرية وما حولها",
         notes: "متاح 24 ساعة، أسعار مخفضة لكبار السن"
     },
     {
-        id: 6,
+        id: 5,
         name: "جمال عبد الناصر",
         phone: "01267890123",
-        vehicleType: "tuk-tuk",
+        serviceType: "tuk-tuk",
         workingArea: "القرية - القرى المجاورة",
         notes: "متخصص في نقل البضائع الخفيفة"
     },
     {
-        id: 7,
+        id: 6,
         name: "محمد صلاح",
         phone: "01078901234",
-        vehicleType: "tuk-tuk",
+        serviceType: "tuk-tuk",
         workingArea: "جميع أنحاء القرية",
         notes: "متاح من الساعة 6 صباحاً حتى 10 مساءً"
-    },
-    {
-        id: 8,
-        name: "حسين علي",
-        phone: "01189012345",
-        vehicleType: "tuk-tuk",
-        workingArea: "القرية - السوق المركزي",
-        notes: "رحلات يومية للسوق صباحاً"
-    },
-    {
-        id: 9,
-        name: "طارق مصطفى",
-        phone: "01290123456",
-        vehicleType: "tuk-tuk",
-        workingArea: "داخل القرية",
-        notes: "أسعار ثابتة، توك توك حديث ومكيف"
     },
 
     // Tricycle Drivers
     {
-        id: 10,
+        id: 7,
         name: "عبد الرحمن حسن",
         phone: "01501234567",
-        vehicleType: "tricycle",
+        serviceType: "tricycle",
         workingArea: "داخل القرية",
         notes: "متخصص في نقل البضائع والمواد الغذائية"
     },
     {
-        id: 11,
+        id: 8,
         name: "ياسر محمود",
         phone: "01612345678",
-        vehicleType: "tricycle",
+        serviceType: "tricycle",
         workingArea: "القرية - المزارع",
         notes: "نقل المحاصيل والمنتجات الزراعية"
     },
+
+    // Transport Vehicles
     {
-        id: 12,
-        name: "وليد السعيد",
-        phone: "01023456789",
-        vehicleType: "tricycle",
-        workingArea: "جميع أنحاء القرية",
-        notes: "متاح للرحلات الداخلية والنقل الخفيف"
+        id: 9,
+        name: "حسام النقل",
+        phone: "01012341234",
+        serviceType: "transport-vehicle",
+        workingArea: "جميع المحافظات",
+        notes: "نقل الأثاث والبضائع الثقيلة - عربة نصف نقل"
     },
     {
+        id: 10,
+        name: "كريم للنقل",
+        phone: "01123451234",
+        serviceType: "transport-vehicle",
+        workingArea: "القرية والمناطق المجاورة",
+        notes: "سيارة ربع نقل، نقل البضائع والأثاث"
+    },
+
+    // ========== CRAFTSMEN & TECHNICIANS ==========
+    // Electricians
+    {
+        id: 11,
+        name: "حسن الكهربائي",
+        phone: "01234512345",
+        serviceType: "electrician",
+        workingArea: "القرية وما حولها",
+        notes: "صيانة كهرباء منازل، تركيب لمبات وأسلاك"
+    },
+    {
+        id: 12,
+        name: "محمد فتحي",
+        phone: "01098761234",
+        serviceType: "electrician",
+        workingArea: "جميع أنحاء القرية",
+        notes: "خبرة 15 سنة، أعمال الكهرباء الثقيلة والخفيفة"
+    },
+
+    // Plumbers
+    {
         id: 13,
-        name: "رامي عادل",
-        phone: "01134567890",
-        vehicleType: "tricycle",
-        workingArea: "القرية - المناطق الريفية",
-        notes: "أسعار مناسبة، متاح معظم الأوقات"
+        name: "أحمد السباك",
+        phone: "01156784321",
+        serviceType: "plumber",
+        workingArea: "القرية والنجوع",
+        notes: "سباكة وصيانة المياه، كشف تسريبات"
     },
     {
         id: 14,
-        name: "فتحي أحمد",
-        phone: "01245678901",
-        vehicleType: "tricycle",
-        workingArea: "داخل القرية والنجوع",
-        notes: "يمكنه الوصول للمناطق الضيقة"
+        name: "عادل حسني",
+        phone: "01267895432",
+        serviceType: "plumber",
+        workingArea: "داخل القرية",
+        notes: "تركيب وصيانة مواسير، خدمة سريعة"
     },
+
+    // Painters
     {
         id: 15,
-        name: "مصطفى كمال",
-        phone: "01056789012",
-        vehicleType: "tricycle",
+        name: "كمال الدهان",
+        phone: "01078906543",
+        serviceType: "painter",
         workingArea: "القرية بالكامل",
-        notes: "خدمة سريعة وأسعار تنافسية"
+        notes: "دهان داخلي وخارجي، ديكورات حديثة"
+    },
+    {
+        id: 16,
+        name: "سمير للدهانات",
+        phone: "01189017654",
+        serviceType: "painter",
+        workingArea: "جميع المناطق",
+        notes: "دهانات فاخرة، ورق حائط، ديكور"
+    },
+
+    // Tilers
+    {
+        id: 17,
+        name: "محمود البلاط",
+        phone: "01290128765",
+        serviceType: "tiler",
+        workingArea: "القرية والمناطق المجاورة",
+        notes: "تركيب السيراميك والرخام والبورسلين"
+    },
+    {
+        id: 18,
+        name: "رضا السباح",
+        phone: "01501239876",
+        serviceType: "tiler",
+        workingArea: "داخل القرية",
+        notes: "معلم سباحة، خبرة 20 سنة"
+    },
+
+    // Plasterers
+    {
+        id: 19,
+        name: "سيد المحارة",
+        phone: "01612340987",
+        serviceType: "plasterer",
+        workingArea: "القرية وما حولها",
+        notes: "محارة وبياض، تشطيبات ممتازة"
+    },
+    {
+        id: 20,
+        name: "حسين عبده",
+        phone: "01023451098",
+        serviceType: "plasterer",
+        workingArea: "جميع أنحاء القرية",
+        notes: "محارة داخلي وخارجي، واجهات"
+    },
+
+    // Carpenters
+    {
+        id: 21,
+        name: "عبد الله النجار",
+        phone: "01134562109",
+        serviceType: "carpenter",
+        workingArea: "القرية والنجوع",
+        notes: "نجارة موبيليا، أبواب وشبابيك"
+    },
+    {
+        id: 22,
+        name: "خالد للنجارة",
+        phone: "01245673210",
+        serviceType: "carpenter",
+        workingArea: "داخل القرية",
+        notes: "تفصيل أثاث حسب الطلب، صيانة"
+    },
+
+    // Blacksmiths
+    {
+        id: 23,
+        name: "حمدي الحداد",
+        phone: "01056784321",
+        serviceType: "blacksmith",
+        workingArea: "القرية بالكامل",
+        notes: "حدادة أبواب وشبابيك، بوابات حديد"
+    },
+    {
+        id: 24,
+        name: "سعد للحدادة",
+        phone: "01167895432",
+        serviceType: "blacksmith",
+        workingArea: "القرية والمناطق المجاورة",
+        notes: "حدادة مسلحة، شبابيك ألمنيوم"
+    },
+
+    // TV Technicians
+    {
+        id: 25,
+        name: "وليد الصيانة",
+        phone: "01278906543",
+        serviceType: "tv-technician",
+        workingArea: "جميع أنحاء القرية",
+        notes: "صيانة تلفزيونات ورسيفرات، تركيب دش"
+    },
+    {
+        id: 26,
+        name: "طارق للإلكترونيات",
+        phone: "01089017654",
+        serviceType: "tv-technician",
+        workingArea: "القرية وما حولها",
+        notes: "صيانة أجهزة منزلية وإلكترونية"
+    },
+
+    // ========== SUPPLIERS & DISTRIBUTORS ==========
+    // Gas Distributors
+    {
+        id: 27,
+        name: "محمد الغاز",
+        phone: "01190128765",
+        serviceType: "gas-distributor",
+        workingArea: "جميع أنحاء القرية",
+        notes: "توصيل أسطوانات الغاز، خدمة سريعة"
+    },
+    {
+        id: 28,
+        name: "أحمد توزيع الغاز",
+        phone: "01201239876",
+        serviceType: "gas-distributor",
+        workingArea: "القرية والنجوع",
+        notes: "توصيل للمنازل، أسعار تنافسية"
+    },
+
+    // ========== EDUCATIONAL & RELIGIOUS SERVICES ==========
+    // Teachers
+    {
+        id: 29,
+        name: "أستاذ كريم",
+        phone: "01512340987",
+        serviceType: "teacher",
+        workingArea: "القرية",
+        notes: "مدرس رياضيات وعلوم، جميع المراحل"
+    },
+    {
+        id: 30,
+        name: "أستاذة سارة",
+        phone: "01623451098",
+        serviceType: "teacher",
+        workingArea: "داخل القرية",
+        notes: "مدرسة لغة عربية وإنجليزية"
+    },
+    {
+        id: 31,
+        name: "أستاذ محمود",
+        phone: "01034562109",
+        serviceType: "teacher",
+        workingArea: "القرية وما حولها",
+        notes: "مدرس فيزياء وكيمياء للثانوية العامة"
+    },
+
+    // Quran Teachers
+    {
+        id: 32,
+        name: "الشيخ عبد الرحمن",
+        phone: "01145673210",
+        serviceType: "quran-teacher",
+        workingArea: "القرية",
+        notes: "تحفيظ قرآن للأطفال والكبار، إجازة"
+    },
+    {
+        id: 33,
+        name: "الشيخ أحمد",
+        phone: "01256784321",
+        serviceType: "quran-teacher",
+        workingArea: "جميع أنحاء القرية",
+        notes: "تحفيظ وتجويد، دروس يومية"
+    },
+
+    // ========== RELIGIOUS & SOCIAL SERVICES ==========
+    // Marriage Officiants
+    {
+        id: 34,
+        name: "الشيخ حسن",
+        phone: "01067895432",
+        serviceType: "marriage-officiant",
+        workingArea: "القرية والقرى المجاورة",
+        notes: "مأذون شرعي، عقود زواج"
+    },
+    {
+        id: 35,
+        name: "المأذون علي",
+        phone: "01178906543",
+        serviceType: "marriage-officiant",
+        workingArea: "جميع المناطق",
+        notes: "مأذون معتمد، خدمات زواج متكاملة"
     }
 ];
 
 /**
- * Vehicle Type Configuration
- * This object contains the display names and icons for each vehicle type
+ * Service Type Configuration
+ * This object contains the display names, icons, and categories for each service type
  */
-const vehicleTypeConfig = {
-    microbus: {
+const serviceTypeConfig = {
+    // Transportation Services
+    "microbus": {
         name: "ميكروباص",
         icon: "fas fa-bus",
-        color: "#667eea"
+        category: "transportation",
+        categoryName: "المواصلات"
     },
     "tuk-tuk": {
         name: "توك توك",
         icon: "fas fa-motorcycle",
-        color: "#764ba2"
+        category: "transportation",
+        categoryName: "المواصلات"
     },
-    tricycle: {
+    "tricycle": {
         name: "تروسيكل",
         icon: "fas fa-bicycle",
-        color: "#4facfe"
+        category: "transportation",
+        categoryName: "المواصلات"
+    },
+    "transport-vehicle": {
+        name: "سيارة نقل",
+        icon: "fas fa-truck",
+        category: "transportation",
+        categoryName: "المواصلات"
+    },
+
+    // Craftsmen & Technicians
+    "electrician": {
+        name: "كهربائي",
+        icon: "fas fa-bolt",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+    "plumber": {
+        name: "سباك",
+        icon: "fas fa-wrench",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+    "painter": {
+        name: "دهان",
+        icon: "fas fa-paint-roller",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+    "tiler": {
+        name: "سباح / بلاط",
+        icon: "fas fa-th",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+    "plasterer": {
+        name: "محارة",
+        icon: "fas fa-trowel",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+    "carpenter": {
+        name: "نجار",
+        icon: "fas fa-hammer",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+    "blacksmith": {
+        name: "حداد",
+        icon: "fas fa-tools",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+    "tv-technician": {
+        name: "صيانة تلفزيونات",
+        icon: "fas fa-tv",
+        category: "craftsmen",
+        categoryName: "الحرفيون والفنيون"
+    },
+
+    // Suppliers
+    "gas-distributor": {
+        name: "توصيل غاز",
+        icon: "fas fa-burn",
+        category: "suppliers",
+        categoryName: "الموردون"
+    },
+
+    // Educational Services
+    "teacher": {
+        name: "مدرس",
+        icon: "fas fa-chalkboard-teacher",
+        category: "educational",
+        categoryName: "الخدمات التعليمية"
+    },
+    "quran-teacher": {
+        name: "محفظ قرآن",
+        icon: "fas fa-book-quran",
+        category: "educational",
+        categoryName: "الخدمات التعليمية"
+    },
+
+    // Religious & Social Services
+    "marriage-officiant": {
+        name: "مأذون شرعي",
+        icon: "fas fa-rings-wedding",
+        category: "religious",
+        categoryName: "الخدمات الدينية والاجتماعية"
+    }
+};
+
+/**
+ * Category Configuration
+ * Groups services into main categories
+ */
+const categoryConfig = {
+    "all": {
+        name: "جميع الخدمات",
+        icon: "fas fa-border-all"
+    },
+    "transportation": {
+        name: "المواصلات",
+        icon: "fas fa-bus"
+    },
+    "craftsmen": {
+        name: "الحرفيون والفنيون",
+        icon: "fas fa-tools"
+    },
+    "suppliers": {
+        name: "الموردون",
+        icon: "fas fa-boxes"
+    },
+    "educational": {
+        name: "التعليم",
+        icon: "fas fa-graduation-cap"
+    },
+    "religious": {
+        name: "الخدمات الدينية",
+        icon: "fas fa-mosque"
     }
 };
