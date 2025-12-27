@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // TEMPORARY SETUP MODE - ALLOW EVERYTHING FOR AUTHENTICATED USERS
+    // TODO: Restore strict rules after setup is complete
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Allow all authenticated users full access to everything
+    match /{document=**} {
+      allow read: if true;  // Public read
+      allow write: if isAuthenticated();  // Authenticated write
+    }
+  }
+}

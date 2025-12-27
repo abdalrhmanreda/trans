@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابدأ من هنا - قريتنا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 2rem;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0d9488;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .steps {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+        }
+
+        .steps h3 {
+            color: #0d9488;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .steps ol {
+            margin-right: 1.5rem;
+        }
+
+        .steps li {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #fbbf24;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .warning h3 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning p {
+            color: #78350f;
+            font-size: 1.05rem;
+        }
+
+        .number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin-left: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+
+        .file-path {
+            background: #2d3748;
+            color: #68d391;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .mini-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .mini-card:hover {
+            border-color: #0d9488;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .mini-card .icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mini-card h4 {
+            color: #0d9488;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .mini-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏠 ابدأ من هنا</h1>
+        <p class="subtitle">نظام قريتنا - دليل الخدمات المحلية</p>
+
+        <div class="warning">
+            <h3>⚠️ قبل البدء</h3>
+            <p>يجب استيراد المحافظات والمدن <strong>مرة واحدة فقط</strong> من ملف cities.json</p>
+        </div>
+
+        <!-- STEP 1: IMPORT -->
+        <div class="card">
+            <h2>
+                <span class="number">1</span>
+                استيراد البيانات
+            </h2>
+            <p>انقر على الزر أدناه لفتح صفحة الاستيراد وتحميل 27 محافظة و100+ مدينة تلقائياً</p>
+            <div class="file-path">
+                /Users/abdalrhmanreda/Downloads/apps/trans/import-data.html
+            </div>
+            <a href="import-data.html" class="btn">
+                🚀 افتح صفحة الاستيراد الآن
+            </a>
+
+            <div class="steps">
+                <h3>خطوات الاستيراد:</h3>
+                <ol>
+                    <li>انقر على الزر الأزرق "🚀 افتح صفحة الاستيراد الآن" أعلاه</li>
+                    <li>اضغط على زر "ابدأ الاستيراد" (باللون البنفسجي)</li>
+                    <li>انتظر حتى يكتمل شريط التقدم (حوالي دقيقة)</li>
+                    <li>ستظهر لك الإحصائيات النهائية</li>
+                    <li>اضغط "انتقل إلى لوحة التحكم"</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- All Files -->
+        <h2 style="text-align: center; color: #0d9488; margin: 3rem 0 1.5rem;">📁 جميع ملفات المشروع</h2>
+
+        <div class="grid">
+            <div class="mini-card" onclick="window.location.href='import-data.html'">
+                <div class="icon">📥</div>
+                <h4>استيراد البيانات</h4>
+                <p>import-data.html</p>
+            </div>
+
+            <div class="mini-card" onclick="window.location.href='dashboard.html'">
+                <div class="icon">🎛️</div>
+                <h4>لوحة التحكم</h4>
+                <p>dashboard.html</p>
+            </div>
+
+            <div class="mini-card" onclick="window.location.href='index.html'">
+                <div class="icon">🌐</div>
+                <h4>الواجهة الأمامية</h4>
+                <p>index.html</p>
+            </div>
+
+            <div class="mini-card" onclick="window.location.href='HOW_TO_USE.html'">
+                <div class="icon">📖</div>
+                <h4>دليل الاستخدام</h4>
+                <p>HOW_TO_USE.html</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 2rem; background: #e0f2fe; border-radius: 1rem; text-align: center;">
+            <h3 style="color: #075985; margin-bottom: 1rem;">✨ الترتيب الصحيح</h3>
+            <p style="color: #0c4a6e; font-size: 1.2rem; line-height: 2;">
+                <strong>1.</strong> استورد البيانات (import-data.html) →
+                <strong>2.</strong> أضف القرى (dashboard.html) →
+                <strong>3.</strong> شارك مع المستخدمين (index.html)
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

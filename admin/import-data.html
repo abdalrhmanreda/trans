@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استيراد المحافظات والمدن - قريتنا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            border-right: 4px solid #667eea;
+        }
+
+        .info-box p {
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .progress-container {
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .log-container {
+            margin-top: 2rem;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            display: none;
+        }
+
+        .log-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-error {
+            color: #ef4444;
+        }
+
+        .log-info {
+            color: #3b82f6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div class="container" id="loginContainer">
+        <h1>🔐 تسجيل الدخول</h1>
+
+        <div class="info-box">
+            <p><strong>يجب تسجيل الدخول أولاً</strong></p>
+            <p style="margin-top: 1rem;">يتطلب استيراد البيانات صلاحيات المسؤول. الرجاء تسجيل الدخول بحساب الإدارة.</p>
+        </div>
+
+        <div style="margin: 2rem 0;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">البريد الإلكتروني:</label>
+            <input type="email" id="loginEmail" placeholder="admin@example.com"
+                style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-family: 'Cairo', sans-serif; margin-bottom: 1rem;">
+
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">كلمة المرور:</label>
+            <input type="password" id="loginPassword" placeholder="••••••••"
+                style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-family: 'Cairo', sans-serif;">
+        </div>
+
+        <button class="btn btn-primary" onclick="loginAdmin()" style="width: 100%;">
+            تسجيل الدخول
+        </button>
+
+        <div id="loginError"
+            style="display: none; margin-top: 1rem; padding: 1rem; background: #fee2e2; border-radius: 0.5rem; color: #991b1b;">
+        </div>
+    </div>
+
+    <!-- Import Screen (hidden initially) -->
+    <div class="container" id="importContainer" style="display: none;">
+        <h1>🏛️ استيراد المحافظات والمدن</h1>
+
+        <div class="info-box">
+            <p><strong>تنبيه:</strong> سيتم استيراد جميع المحافظات والمدن من ملف <code>cities.json</code> وإضافتها
+                تلقائياً إلى قاعدة البيانات.</p>
+            <p style="margin-top: 1rem;">✅ المحافظات: سيتم استيرادها جميعاً</p>
+            <p>✅ المدن: سيتم استيرادها وربطها بمحافظاتها</p>
+            <p>⚠️ القرى: تتم إضافتها يدوياً من لوحة التحكم</p>
+        </div>
+
+        <div style="background: #d1fae5; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+            <p style="color: #065f46;">✅ تم تسجيل الدخول بنجاح: <strong id="userEmail"></strong></p>
+        </div>
+
+        <button id="importBtn" class="btn btn-primary" onclick="startImport()">
+            ابدأ الاستيراد
+        </button>
+
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">جاري الاستيراد...</div>
+        </div>
+
+        <div class="log-container" id="logContainer"></div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="govCount">0</div>
+                <div class="stat-label">محافظة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="cityCount">0</div>
+                <div class="stat-label">مدينة</div>
+            </div>
+        </div>
+
+        <button id="dashboardBtn" class="btn btn-success" onclick="goToDashboard()" style="display: none;">
+            انتقل إلى لوحة التحكم
+        </button>
+    </div>
+
+    <script type="module">
+        import { FirebaseService, auth } from '../js/firebase-service.js';
+        import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        // Login function
+        window.loginAdmin = async () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+
+            if (!email || !password) {
+                errorDiv.textContent = 'الرجاء إدخال البريد الإلكتروني وكلمة المرور';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+
+                // Login successful
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('importContainer').style.display = 'block';
+                document.getElementById('userEmail').textContent = email;
+
+            } catch (error) {
+                console.error('Login error:', error);
+                errorDiv.textContent = 'خطأ في تسجيل الدخول: ' + (error.message || 'بيانات غير صحيحة');
+                errorDiv.style.display = 'block';
+            }
+        };
+
+        // Auto-check if already logged in
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('importContainer').style.display = 'block';
+                document.getElementById('userEmail').textContent = user.email;
+            }
+        });
+
+        window.goToDashboard = () => {
+            window.location.href = 'dashboard.html';
+        };
+
+        window.startImport = async () => {
+            const btn = document.getElementById('importBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            const logContainer = document.getElementById('logContainer');
+            const stats = document.getElementById('stats');
+            const dashboardBtn = document.getElementById('dashboardBtn');
+
+            btn.disabled = true;
+            progressContainer.style.display = 'block';
+            logContainer.style.display = 'block';
+            logContainer.innerHTML = '';
+
+            function log(message, type = 'info') {
+                const logItem = document.createElement('div');
+                logItem.className = `log-item log-${type}`;
+                logItem.textContent = message;
+                logContainer.appendChild(logItem);
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+
+            function updateProgress(percent, text) {
+                document.getElementById('progressFill').style.width = percent + '%';
+                document.getElementById('progressText').textContent = text;
+            }
+
+            try {
+                // Load JSON file
+                log('⏳ جاري تحميل البيانات من cities.json...', 'info');
+                const response = await fetch('../data/cities.json');
+                const data = await response.json();
+
+                if (!data || data.length === 0) {
+                    throw new Error('الملف فارغ أو غير صالح');
+                }
+
+                const country = data[0]; // مصر
+                const states = country.state || [];
+
+                log(`✅ تم تحميل ${states.length} محافظة`, 'success');
+                updateProgress(10, 'تم تحميل البيانات...');
+
+                let govCount = 0;
+                let cityCount = 0;
+                const totalSteps = states.length;
+
+                // Import governorates and cities
+                for (let i = 0; i < states.length; i++) {
+                    const state = states[i];
+                    const progress = 10 + ((i + 1) / totalSteps * 80);
+
+                    log(`📍 جاري إضافة: ${state.name}`, 'info');
+
+                    // Add governorate
+                    const govResult = await FirebaseService.addGovernorate({
+                        name: state.name,
+                        icon: country.emoji || '🏛️',
+                        originalId: state.id
+                    });
+
+                    if (govResult.success) {
+                        govCount++;
+                        log(`  ✅ تمت إضافة المحافظة: ${state.name}`, 'success');
+
+                        // Add cities for this governorate
+                        const cities = state.city || [];
+                        for (const city of cities) {
+                            const cityResult = await FirebaseService.addCity({
+                                name: city.name,
+                                governorateId: govResult.id,
+                                originalId: city.id
+                            });
+
+                            if (cityResult.success) {
+                                cityCount++;
+                            } else {
+                                log(`  ⚠️ فشل إضافة المدينة: ${city.name}`, 'error');
+                            }
+                        }
+                        log(`  ✅ تمت إضافة ${cities.length} مدينة للمحافظة`, 'success');
+                    } else {
+                        log(`  ❌ فشل إضافة المحافظة: ${state.name} - ${govResult.error}`, 'error');
+                    }
+
+                    updateProgress(progress, `تم معالجة ${i + 1} من ${totalSteps} محافظة`);
+                }
+
+                updateProgress(100, 'اكتمل الاستيراد! 🎉');
+                log('🎉 تم الاستيراد بنجاح!', 'success');
+                log(`📊 الإجمالي: ${govCount} محافظة و ${cityCount} مدينة`, 'success');
+
+                // Update stats
+                document.getElementById('govCount').textContent = govCount;
+                document.getElementById('cityCount').textContent = cityCount;
+                stats.style.display = 'grid';
+                dashboardBtn.style.display = 'block';
+
+            } catch (error) {
+                log(`❌ حدث خطأ: ${error.message}`, 'error');
+                console.error('Import error:', error);
+                btn.disabled = false;
+                updateProgress(0, 'فشل الاستيراد');
+            }
+        };
+    </script>
+</body>
+
+</html>

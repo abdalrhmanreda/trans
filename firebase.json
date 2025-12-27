@@ -1,0 +1,41 @@
+{
+    "firestore": {
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
+    },
+    "hosting": {
+        "public": ".",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**",
+            "README.md",
+            "FIREBASE_SETUP.md",
+            "DASHBOARD_README.md",
+            "NAVIGATION_GUIDE.md",
+            "DEPLOY_FIREBASE.md",
+            "dashboard.js"
+        ],
+        "headers": [
+            {
+                "source": "**/*.@(js|mjs)",
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "max-age=3600"
+                    }
+                ]
+            },
+            {
+                "source": "**/*.@(css)",
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "max-age=86400"
+                    }
+                ]
+            }
+        ],
+        "rewrites": []
+    }
+}

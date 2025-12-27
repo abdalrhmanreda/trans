@@ -1,0 +1,172 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ==================== HELPER FUNCTIONS ====================
+    
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user is admin (has admin custom claim or admin role in users collection)
+    function isAdmin() {
+      return isAuthenticated() && 
+             (request.auth.token.admin == true || 
+              get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    // Validate required fields exist
+    function hasRequiredFields(required) {
+      return request.resource.data.keys().hasAll(required);
+    }
+    
+    // Check if service is active
+    function isActiveService(serviceData) {
+      return serviceData.isActive == true;
+    }
+    
+    // ==================== GOVERNORATES ====================
+    
+    match /governorates/{governorateId} {
+      // Public: Read all governorates
+      allow read: if true;
+      
+      // TEMPORARY FOR IMPORT: Allow any authenticated user to create
+      // TODO: Change back to isAdmin() after initial import
+      allow create: if isAuthenticated() && 
+                       hasRequiredFields(['name', 'icon', 'createdAt']) &&
+                       request.resource.data.name is string &&
+                       request.resource.data.icon is string;
+      
+      allow update: if isAuthenticated() &&
+                       request.resource.data.name is string &&
+                       request.resource.data.icon is string;
+      
+      allow delete: if isAuthenticated();
+    }
+    
+    // ==================== CITIES ====================
+    
+    match /cities/{cityId} {
+      // Public: Read all cities
+      allow read: if true;
+      
+      // TEMPORARY FOR IMPORT: Allow any authenticated user to create
+      // TODO: Change back to isAdmin() after initial import
+      allow create: if isAuthenticated() && 
+                       hasRequiredFields(['name', 'governorateId', 'createdAt']) &&
+                       request.resource.data.name is string &&
+                       request.resource.data.governorateId is string;
+      
+      allow update: if isAuthenticated() &&
+                       request.resource.data.name is string &&
+                       request.resource.data.governorateId is string;
+      
+      allow delete: if isAuthenticated();
+    }
+    
+    // ==================== VILLAGES ====================
+    
+    match /villages/{villageId} {
+      // Public: Read all villages
+      allow read: if true;
+      
+      // TEMPORARY FOR SETUP: Allow any authenticated user to create
+      // TODO: Change back to isAdmin() after initial setup
+      allow create: if isAuthenticated() && 
+                       hasRequiredFields(['name', 'cityId', 'governorateId', 'createdAt']) &&
+                       request.resource.data.name is string &&
+                       request.resource.data.cityId is string &&
+                       request.resource.data.governorateId is string;
+      
+      allow update: if isAuthenticated() &&
+                       request.resource.data.name is string &&
+                       request.resource.data.cityId is string &&
+                       request.resource.data.governorateId is string;
+      
+      allow delete: if isAuthenticated();
+    }
+    
+    // ==================== SERVICE CATEGORIES ====================
+    
+    match /service_categories/{categoryId} {
+      // Public: Read all categories
+      allow read: if true;
+      
+      // TEMPORARY: Allow authenticated users
+      allow create: if isAuthenticated() && 
+                       hasRequiredFields(['name', 'icon', 'createdAt']) &&
+                       request.resource.data.name is string &&
+                       request.resource.data.icon is string;
+      
+      allow update: if isAuthenticated() &&
+                       request.resource.data.name is string &&
+                       request.resource.data.icon is string;
+      
+      allow delete: if isAuthenticated();
+    }
+    
+    // ==================== SERVICES (Most Important) ====================
+    
+    match /services/{serviceId} {
+      // Public: Read only ACTIVE services
+      allow read: if resource.data.isActive == true;
+      
+      // Authenticated: Read ALL services (including inactive)
+      allow get: if isAuthenticated();
+      allow list: if isAuthenticated();
+      
+      // TEMPORARY: Allow authenticated users to create
+      allow create: if isAuthenticated() && 
+                       hasRequiredFields([
+                         'name', 
+                         'phone', 
+                         'whatsapp',
+                         'categoryId', 
+                         'governorateId', 
+                         'cityId', 
+                         'villageId',
+                         'isActive',
+                         'createdAt'
+                       ]) &&
+                       // Validate data types
+                       request.resource.data.name is string &&
+                       request.resource.data.name.size() > 0 &&
+                       request.resource.data.phone is string &&
+                       request.resource.data.phone.matches('^01[0-9]{9}$') && // Egyptian phone regex
+                       request.resource.data.whatsapp is bool &&
+                       request.resource.data.isActive is bool;
+      
+      // TEMPORARY: Allow authenticated users to update
+      allow update: if isAuthenticated() &&
+                       request.resource.data.name is string &&
+                       request.resource.data.name.size() > 0 &&
+                       request.resource.data.phone is string &&
+                       request.resource.data.phone.matches('^01[0-9]{9}$') &&
+                       request.resource.data.whatsapp is bool &&
+                       request.resource.data.isActive is bool;
+      
+      // TEMPORARY: Allow authenticated users to delete
+      allow delete: if isAuthenticated();
+    }
+    
+    // ==================== ADMINS (Role Management) ====================
+    
+    match /admins/{adminId} {
+      // Only admins can read admin list
+      allow read: if isAdmin();
+      
+      // Only super admin can create/update/delete admins
+      // (You'd need to implement super admin separately)
+      allow write: if false; // Manage via Firebase Console or Cloud Functions
+    }
+    
+    // ==================== SETTINGS (Future Use) ====================
+    
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل استخدام النظام - قريتنا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .step-card {
+            background: #f8f9fa;
+            border-right: 5px solid #667eea;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            margin-top: 1rem;
+        }
+
+        .step-card p {
+            margin-bottom: 1rem;
+            color: #495057;
+        }
+
+        .file-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .file-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-link.secondary {
+            background: #10b981;
+        }
+
+        .file-link.danger {
+            background: #ef4444;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-right: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-right: 4px solid #fbbf24;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-right: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .success-box h4 {
+            color: #065f46;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-list {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            margin-bottom: 0.75rem;
+            border-radius: 0.5rem;
+            border: 2px solid #e9ecef;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .file-desc {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .quick-link-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .quick-link-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-link-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 دليل استخدام نظام قريتنا</h1>
+            <p>دليل شامل خطوة بخطوة</p>
+        </div>
+
+        <div class="content">
+            <div class="warning-box">
+                <h4>⚠️ مهم جداً - اقرأ هذا أولاً!</h4>
+                <p>يجب استيراد البيانات <strong>مرة واحدة فقط</strong> باستخدام <code>import-data.html</code></p>
+                <p>لا تقم بتشغيل الاستيراد أكثر من مرة لتجنب تكرار البيانات!</p>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>📥 استيراد المحافظات والمدن</h3>
+                <p><strong>الملف:</strong> <code>import-data.html</code></p>
+
+                <div class="info-box">
+                    <h4>ماذا سيحدث؟</h4>
+                    <p>سيتم استيراد:</p>
+                    <ul>
+                        <li>✅ 27 محافظة مصرية</li>
+                        <li>✅ 100+ مدينة ومركز</li>
+                        <li>✅ ربط تلقائي بين المدن ومحافظاتها</li>
+                    </ul>
+                </div>
+
+                <p><strong>الخطوات:</strong></p>
+                <ol>
+                    <li>انسخ هذا المسار والصقه في المتصفح:</li>
+                    <code style="display: block; margin: 1rem 0; padding: 1rem;">
+                        file:///Users/abdalrhmanreda/Downloads/apps/trans/import-data.html
+                    </code>
+                    <li>اضغط على زر <strong>"ابدأ الاستيراد"</strong> (باللون البنفسجي)</li>
+                    <li>انتظر حتى يكتمل شريط التقدم (حوالي دقيقة)</li>
+                    <li>ستظهر لك الإحصائيات: عدد المحافظات والمدن</li>
+                    <li>اضغط على <strong>"انتقل إلى لوحة التحكم"</strong></li>
+                </ol>
+
+                <a href="file:///Users/abdalrhmanreda/Downloads/apps/trans/import-data.html" class="file-link">
+                    🚀 افتح صفحة الاستيراد
+                </a>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>🏘️ إضافة القرى يدوياً</h3>
+                <p><strong>الملف:</strong> <code>dashboard.html</code></p>
+
+                <div class="info-box">
+                    <h4>لماذا يدوياً؟</h4>
+                    <p>لأن القرى تختلف وتتعدد، ويجب إضافتها حسب احتياجك الفعلي.</p>
+                </div>
+
+                <p><strong>الخطوات:</strong></p>
+                <ol>
+                    <li>افتح لوحة التحكم</li>
+                    <li>سجل دخول بحساب الإدارة</li>
+                    <li>اذهب إلى تبويب <strong>"القرى"</strong> (الموجود في الأعلى)</li>
+                    <li>اضغط على <strong>"+ إضافة قرية"</strong> (زر أخضر)</li>
+                    <li>املأ النموذج:
+                        <ul>
+                            <li><strong>اختر المحافظة</strong> (من القائمة المستوردة)</li>
+                            <li><strong>اختر المدينة</strong> (ستظهر تلقائياً بناءً على المحافظة)</li>
+                            <li><strong>اكتب اسم القرية</strong></li>
+                        </ul>
+                    </li>
+                    <li>اضغط <strong>"حفظ"</strong></li>
+                </ol>
+
+                <a href="file:///Users/abdalrhmanreda/Downloads/apps/trans/dashboard.html" class="file-link secondary">
+                    🎛️ افتح لوحة التحكم
+                </a>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>➕ إضافة خدمات</h3>
+                <p><strong>الملف:</strong> <code>dashboard.html</code> (نفس لوحة التحكم)</p>
+
+                <p><strong>الخطوات:</strong></p>
+                <ol>
+                    <li>في لوحة التحكم، اذهب إلى <strong>"مقدمو الخدمات"</strong></li>
+                    <li>اضغط <strong>"+ إضافة مقدم خدمة"</strong></li>
+                    <li>املأ البيانات:
+                        <ul>
+                            <li>اسم مقدم الخدمة (مثلاً: د. أحمد محمد)</li>
+                            <li>رقم الهاتف</li>
+                            <li>هل واتساب متاح؟</li>
+                            <li><strong>نوع الخدمة</strong> (طبيب، كهربائي، سباك...)</li>
+                            <li><strong>اختر المحافظة</strong></li>
+                            <li><strong>اختر المدينة</strong> (تظهر تلقائياً)</li>
+                            <li><strong>اختر القرية</strong> (تظهر تلقائياً)</li>
+                            <li>ملاحظات (اختياري)</li>
+                        </ul>
+                    </li>
+                    <li>احفظ ✅</li>
+                </ol>
+
+                <div class="success-box">
+                    <h4>✨ القوائم المتتالية الذكية</h4>
+                    <p>عندما تختار المحافظة → تظهر مدنها فقط</p>
+                    <p>عندما تختار المدينة → تظهر قراها فقط</p>
+                    <p>هذا يسهل عليك اختيار الموقع الصحيح!</p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h3>👥 الواجهة الأمامية للمستخدمين</h3>
+                <p><strong>الملف:</strong> <code>index.html</code></p>
+
+                <p><strong>كيف تعمل؟</strong></p>
+                <ol>
+                    <li>المستخدم يختار <strong>المحافظة</strong></li>
+                    <li>تظهر له <strong>المدن</strong> فقط في تلك المحافظة</li>
+                    <li>يختار <strong>المدينة</strong></li>
+                    <li>تظهر له <strong>القرى</strong> فقط في تلك المدينة</li>
+                    <li>يختار <strong>القرية</strong></li>
+                    <li>تظهر له <strong>جميع الخدمات المتاحة</strong> في تلك القرية</li>
+                    <li>يمكنه اختيار نوع الخدمة للتصفية</li>
+                    <li>يضغط <strong>"اتصال"</strong> أو <strong>"واتساب"</strong> للتواصل</li>
+                </ol>
+
+                <a href="file:///Users/abdalrhmanreda/Downloads/apps/trans/index.html" class="file-link">
+                    🌐 افتح الواجهة الأمامية
+                </a>
+            </div>
+
+            <!-- Quick Links -->
+            <h2 style="text-align: center; margin: 3rem 0 2rem; color: #667eea;">🔗 روابط سريعة</h2>
+
+            <div class="quick-links">
+                <div class="quick-link-card"
+                    onclick="window.open('file:///Users/abdalrhmanreda/Downloads/apps/trans/import-data.html')">
+                    <div class="icon">📥</div>
+                    <h4>استيراد البيانات</h4>
+                    <p>import-data.html</p>
+                </div>
+
+                <div class="quick-link-card"
+                    onclick="window.open('file:///Users/abdalrhmanreda/Downloads/apps/trans/dashboard.html')">
+                    <div class="icon">🎛️</div>
+                    <h4>لوحة التحكم</h4>
+                    <p>dashboard.html</p>
+                </div>
+
+                <div class="quick-link-card"
+                    onclick="window.open('file:///Users/abdalrhmanreda/Downloads/apps/trans/index.html')">
+                    <div class="icon">🌐</div>
+                    <h4>الواجهة الأمامية</h4>
+                    <p>index.html</p>
+                </div>
+            </div>
+
+            <!-- Files Overview -->
+            <h2 style="text-align: center; margin: 3rem 0 2rem; color: #667eea;">📁 الملفات في المشروع</h2>
+
+            <div class="file-list">
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">cities.json</div>
+                        <div class="file-desc">بيانات المحافظات والمدن المصرية (مصدر البيانات)</div>
+                    </div>
+                    <span style="background: #e9ecef; padding: 0.5rem 1rem; border-radius: 0.5rem;">📄 JSON</span>
+                </div>
+
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">import-data.html</div>
+                        <div class="file-desc">صفحة استيراد البيانات إلى Firebase (استخدم مرة واحدة)</div>
+                    </div>
+                    <span style="background: #667eea; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem;">🚀
+                        مهم</span>
+                </div>
+
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">dashboard.html</div>
+                        <div class="file-desc">لوحة التحكم الإدارية (إضافة وتعديل البيانات)</div>
+                    </div>
+                    <span style="background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem;">🎛️
+                        إدارة</span>
+                </div>
+
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">index.html</div>
+                        <div class="file-desc">الواجهة الأمامية للمستخدمين (عرض وبحث الخدمات)</div>
+                    </div>
+                    <span style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem;">👥
+                        مستخدمين</span>
+                </div>
+
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">admin-app.js</div>
+                        <div class="file-desc">منطق لوحة التحكم</div>
+                    </div>
+                    <span style="background: #e9ecef; padding: 0.5rem 1rem; border-radius: 0.5rem;">⚙️ JS</span>
+                </div>
+
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">firebase-service.js</div>
+                        <div class="file-desc">خدمات Firebase والتواصل مع قاعدة البيانات</div>
+                    </div>
+                    <span style="background: #e9ecef; padding: 0.5rem 1rem; border-radius: 0.5rem;">🔥 Firebase</span>
+                </div>
+            </div>
+
+            <!-- Final Note -->
+            <div class="success-box" style="margin-top: 3rem;">
+                <h4>🎉 جاهز للانطلاق!</h4>
+                <p>الآن ابدأ باستيراد البيانات من <code>import-data.html</code></p>
+                <p>ثم أضف القرى والخدمات من <code>dashboard.html</code></p>
+                <p>وشارك <code>index.html</code> مع المستخدمين!</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

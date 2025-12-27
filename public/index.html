@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قريتنا - دليل الخدمات المحلية</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <!-- Light Theme Styles -->
+    <link rel="stylesheet" href="../css/public-light.css">
+
+</head>
+
+<body>
+    <!-- Loading -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- App -->
+    <div id="app">
+        <div class="header">
+            <h1><i class="fas fa-home"></i> قريتنا</h1>
+            <p>دليل الخدمات المحلية</p>
+        </div>
+
+        <div class="container">
+            <div id="breadcrumb" class="breadcrumb"></div>
+
+            <!-- Step 1: Governorate Selection -->
+            <div id="step1" class="step active">
+                <div class="page-title">
+                    <h1>اختر محافظتك</h1>
+                    <p>اعثر على أفضل الخدمات المحلية القريبة منك في جميع أنحاء مصر</p>
+                </div>
+
+                <div class="search location-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchGov" placeholder="ابحث عن محافظتك...">
+                </div>
+
+                <!-- Popular section will be added here by JavaScript if needed -->
+                <div id="popularGovSection" style="display: none;">
+                    <h2 class="section-header">المحافظات الأكثر طلباً</h2>
+                    <div id="popularGovList" class="gov-grid"></div>
+                </div>
+
+                <h2 class="section-header">جميع المحافظات</h2>
+                <div id="govList" class="gov-grid"></div>
+            </div>
+
+            <!-- Step 2: City Selection -->
+            <div id="step2" class="step">
+                <div class="page-title">
+                    <h1>اختر المدينة أو المركز</h1>
+                    <p>حدد المدينة أو المركز التابع لمحافظة <span id="selectedGovName"></span></p>
+                </div>
+
+                <div class="search location-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchCity" placeholder="ابحث عن مدينة...">
+                </div>
+
+                <h2 class="section-header">المدن والمراكز المتاحة</h2>
+                <div id="cityList" class="gov-grid"></div>
+
+                <button class="btn btn-back" onclick="app.goBack(1)">
+                    <i class="fas fa-arrow-right"></i> رجوع
+                </button>
+            </div>
+
+            <!-- Step 3: Village Selection -->
+            <div id="step3" class="step">
+                <div class="page-title">
+                    <h1>اختر القرية أو الحي</h1>
+                    <p>حدد القرية أو الحي في <span id="selectedCityName"></span></p>
+                </div>
+
+                <div class="search location-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchVillage" placeholder="ابحث عن قرية...">
+                </div>
+
+                <h2 class="section-header">القرى والأحياء المتاحة</h2>
+                <div id="villageList" class="gov-grid"></div>
+
+                <button class="btn btn-back" onclick="app.goBack(2)">
+                    <i class="fas fa-arrow-right"></i> رجوع
+                </button>
+            </div>
+
+            <!-- Step 4: Services -->
+            <div id="step4" class="step">
+                <div class="page-title">
+                    <h1>مقدمو الخدمات</h1>
+                    <p>ابحث عن مقدمي الخدمات في <span id="selectedVillageName"></span></p>
+                </div>
+
+                <div class="search location-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchService" placeholder="ابحث عن خدمة أو مقدم خدمة...">
+                </div>
+
+                <!-- Category Filters -->
+                <div id="categorySection" style="margin-bottom: 2rem;">
+                    <h2 class="section-header">تصفية حسب الفئة</h2>
+                    <div id="categoryList" class="category-filters"></div>
+                </div>
+
+                <!-- Services List -->
+                <div id="servicesContainer">
+                    <h2 class="section-header" id="servicesTitle">جميع الخدمات</h2>
+                    <div id="servicesList" class="services-grid"></div>
+                    <div id="emptyServices" class="empty-state" style="display: none;">
+                        <i class="fas fa-inbox"></i>
+                        <h3>لا توجد خدمات متاحة</h3>
+                        <p>جرب البحث بكلمات مختلفة أو اختر فئة أخرى</p>
+                    </div>
+                </div>
+
+                <button class="btn btn-back" onclick="app.goBack(3)">
+                    <i class="fas fa-arrow-right"></i> رجوع
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Application Logic -->
+    <script type="module" src="../js/public-app.js"></script>
+
+</body>
+
+</html>
