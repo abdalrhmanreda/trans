@@ -536,15 +536,12 @@ const admin = {
         const villageId = document.getElementById('serviceVillage').value;
         const notes = document.getElementById('serviceNotes').value;
 
-        // Validation: Name, Phone, Category, Gov, and City are required. Village is OPTIONAL.
-        if (!name || !phone || !categoryId || !governorateId || !cityId) {
-            this.showToast('الرجاء ملء جميع الحقول المطلوبة (الاسم، الهاتف، القسم، المحافظة، المدينة)');
+        if (!name || !phone || !categoryId || !governorateId || !cityId || !villageId) {
+            this.showToast('الرجاء ملء جميع الحقول المطلوبة');
             return;
         }
 
         this.showLoading(true);
-        // If villageId is empty string, it will be saved as empty string. 
-        // Can optionally set to null if preferred: const finalVillageId = villageId || null;
         const data = { name, phone, whatsapp, categoryId, governorateId, cityId, villageId, notes };
 
         let result;
